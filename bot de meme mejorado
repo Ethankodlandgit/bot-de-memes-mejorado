@@ -1,0 +1,28 @@
+import discord
+import os
+from discord.ext  import commands
+import random
+
+description='Este es un programa donde vinculamos a discord con studio code para lanzar imagenes:'
+intents=discord. Intents.default()
+intents.members=True
+intents.message_content=True
+
+bot=commands.Bot(command_prefix="$", description=description, intents=intents)
+img_name_pro = os.listdir('imagenpro')
+
+@bot.event
+async def on_ready():
+    print(f'logeado como {bot.user} (ID: {bot.user.id})')
+
+@bot.command()
+async def imagenpro(ctx):
+    if ctx.message.author == bot.user:
+        return
+
+    img_to_send_pro = random.choice(img_name_pro)
+    with open(f'Imagenpro/{img_to_send_pro}', 'rb') as f:
+        picture = discord.File(f)
+        await ctx.send(file=picture)
+
+bot.run('MTI0ODk5MTU4MjIyNTQzNjgwNA.GmAGy3.w71wbUIj0qqe9G0xBWP6tnX20HnEVcH-J6NZxw')
